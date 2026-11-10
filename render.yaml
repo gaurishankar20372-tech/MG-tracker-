@@ -1,18 +1,24 @@
-
 services:
   - type: web
     name: mgs-track-analytics
     runtime: python
+
     buildCommand: pip install -r requirements.txt
+
     startCommand: gunicorn app:app
+
     healthCheckPath: /health
+
     envVars:
-      - key: DATA_DIR
-        value: /var/data
       - key: SECRET_KEY
         generateValue: true
+
       - key: ADMIN_PASSWORD
         sync: false
+
+      - key: DATA_DIR
+        value: /var/data
+
     disk:
       name: mgs-tracker-data
       mountPath: /var/data
