@@ -608,47 +608,14 @@ def consent(code):
         <button onclick="getGPS()">Allow GPS</button>
         <p id="status" class="small"></p>
     </div>
-
-    <script>
-    async function getGPS(){
-
-        const status = document.getElementById("status");
-
-        if(!navigator.geolocation){
-            status.innerText = "GPS उपलब्ध नहीं है।";
-            return;
-        }
-
-        status.innerText = "Permission का इंतजार है...";
-
-        navigator.geolocation.getCurrentPosition(
-            async function(pos){
-
-                const data = {
-                    latitude: pos.coords.latitude,
-                    longitude: pos.coords.longitude
-                };
-
-                const response = await fetch("/gps",{
-                    method:"POST",
-                    headers:{
-                        "Content-Type":"application/json"
-                    },
-                    body:JSON.stringify(data)
-                });
-
-                status.innerText = response.ok
-                    ? "GPS अनुमति के साथ स्थान अपडेट हो गया।"
-                    : "स्थान अपडेट नहीं हो सका।";
-            },
-
-            function(){
-                status.innerText =
-                    "GPS अनुमति नहीं मिली या उपलब्ध नहीं है।";
-            }
-        );
-    }
-    </script>
+<script>
+function copyText(text){{
+    navigator.clipboard.writeText(text)
+    .then(()=>alert("Link copied!"))
+    .catch(()=>alert("Copy failed. Long-press the link."));
+}}
+</script>
+    
     """
 
     return page("Thank You", body)
